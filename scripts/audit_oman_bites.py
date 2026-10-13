@@ -84,7 +84,18 @@ def read_sheet(path: Path, wanted_sheet: str) -> tuple[list[str], list[dict[str,
 
     if not matrix:
         raise ValueError(f"Worksheet {wanted_sheet!r} is empty")
-    headers = [str(v or "").strip() for v in matrix[0]]
+    raw_headers = [str(v or "").strip() for v in matrix[0]]
+    # Some pivot-output sheets have multiple tables side-by-side with duplicate headers.
+    # Keep the left-most header unchanged and uniquely name later repeats so dict rows do not overwrite values.
+    header_counts: Counter[str] = Counter()
+    headers = []
+    for index, label in enumerate(raw_headers, start=1):
+        base = label or f"UnnamedColumn{index}"
+        header_counts[base] += 1
+        name = base if header_counts[base] == 1 else f"{base}__column{index}"
+        while name in headers:
+            name = f"{base}__column{index}_{header_counts[base]}"
+        headers.append(name)
     records = []
     for raw_row in matrix[1:]:
         values = raw_row + [""] * max(0, len(headers) - len(raw_row))
