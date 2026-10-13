@@ -55,7 +55,11 @@
     "total_orders": "550",
     "total_revenue_omr": "3346.4029999999984",
     "average_order_value_omr": "6.084369090909088",
-    "average_rating": "3.6727272727272728"
+    "average_rating": "3.6727272727272728",
+    "row_level_average_order_value_omr": "6.084369",
+    "average_order_value_difference_omr": "0.000000",
+    "row_level_average_rating": "3.672727",
+    "average_rating_difference": "0.000000"
   },
   "stored_branch_revenue_omr": [
     {

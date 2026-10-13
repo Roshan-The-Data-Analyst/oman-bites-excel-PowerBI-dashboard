@@ -124,7 +124,10 @@ def fmt(value: Decimal) -> str:
 
 
 def fmt3(value: Decimal) -> str:
-    return f"{value.quantize(D('0.001'), rounding=ROUND_HALF_UP):.3f}"
+    rounded = value.quantize(D("0.001"), rounding=ROUND_HALF_UP)
+    if rounded == ZERO:
+        rounded = ZERO
+    return f"{rounded:.3f}"
 
 
 def write_csv(path: Path, fields: list[str], rows: list[dict[str, object]]) -> None:
@@ -309,6 +312,10 @@ def main() -> None:
             "average_order_value_omr": str(stored_aov) if stored_aov is not None else None,
             "average_rating": str(stored_rating) if stored_rating is not None else None,
             "row_level_revenue_difference_omr": fmt3(total_revenue - stored_total) if stored_total is not None else None,
+            "row_level_average_order_value_omr": str((total_revenue / D(len(clean_rows))).quantize(D("0.000001"), rounding=ROUND_HALF_UP)) if clean_rows else None,
+            "average_order_value_difference_omr": str(((total_revenue / D(len(clean_rows))) - stored_aov).quantize(D("0.000001"), rounding=ROUND_HALF_UP)) if stored_aov is not None and clean_rows else None,
+            "row_level_average_rating": str((sum(ratings, ZERO) / D(len(ratings))).quantize(D("0.000001"), rounding=ROUND_HALF_UP)) if ratings else None,
+            "average_rating_difference": str(((sum(ratings, ZERO) / D(len(ratings))) - stored_rating).quantize(D("0.000001"), rounding=ROUND_HALF_UP)) if stored_rating is not None and ratings else None,
             "row_level_orders_match": int(stored_orders) == len(clean_rows) if stored_orders is not None else None,
         },
         "branch_revenue_reconciliation": branch_rows,

@@ -91,7 +91,7 @@ Branch revenue in `Pover Pivot Q&A`:
 | Duqm | 495.112 |
 | **Total** | **3,346.403** |
 
-The row-level audit script was executed with GitHub Actions. It calculated `SUM(Quantity × Unit Price)` across the 550 cleaned records as **OMR 3,346.403**, matching the cached Power Pivot total (difference **OMR 0.000** at 3-decimal reporting precision). The six branch calculations also match their cached pivot values at OMR 0.001 precision:
+The row-level audit script was executed with GitHub Actions. It calculated `SUM(Quantity × Unit Price)` across the 550 cleaned records as **OMR 3,346.403**, matching the cached Power Pivot total (difference **OMR 0.000** at 3-decimal reporting precision). The row-level average order value (revenue divided by 550 orders) is **OMR 6.084369**, and the row-level average rating is **3.672727**; both match their stored Power Pivot measures to six decimal places. The six branch calculations also match their cached pivot values at OMR 0.001 precision:
 
 | Branch | Recomputed revenue (OMR) | Stored branch pivot (OMR) | Difference |
 |---|---:|---:|---:|

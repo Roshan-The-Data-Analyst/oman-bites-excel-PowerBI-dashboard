@@ -45,7 +45,7 @@ The raw workbook and cleaned workbook do **not currently reconcile as a full row
 
 **Interpretation:** The processed workbook may be a filtered sample or may have been produced from a different source version. Do not describe it as a complete clean-up of the current raw workbook until the missing IDs and extra IDs are explained.
 
-The cleaned workbook's Power Pivot summary reports 550 orders, total revenue of **OMR 3,346.403**, average order value of **OMR 6.084369**, and average rating of **3.672727**. A GitHub Actions run recalculated revenue from all 550 cleaned rows as Quantity × Unit Price: **OMR 3,346.403**, a difference of **OMR 0.000** from the cached total. Each of the six row-level branch revenue totals also matches the stored branch pivot at OMR 0.001 precision. The separate raw-to-cleaned Order ID lineage gap still needs explanation.
+The cleaned workbook's Power Pivot summary reports 550 orders, total revenue of **OMR 3,346.403**, average order value of **OMR 6.084369**, and average rating of **3.672727**. A GitHub Actions run recalculated revenue from all 550 cleaned rows as Quantity × Unit Price: **OMR 3,346.403**, a difference of **OMR 0.000** from the cached total. The recomputed average order value (**OMR 6.084369**) and average rating (**3.672727**) are also checked against the stored measures. Each of the six row-level branch revenue totals matches the stored branch pivot at OMR 0.001 precision. The separate raw-to-cleaned Order ID lineage gap still needs explanation.
 
 ## Audit files
 

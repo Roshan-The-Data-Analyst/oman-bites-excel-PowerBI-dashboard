@@ -44,13 +44,21 @@ jobs:
           print("Row-level revenue (OMR):", audit["cleaned"]["row_level_revenue_omr"])
           print("Stored Power Pivot revenue (OMR):", audit["stored_power_pivot_measures"]["total_revenue_omr"])
           print("Revenue difference (OMR):", audit["stored_power_pivot_measures"]["row_level_revenue_difference_omr"])
+          print("Recomputed AOV (OMR):", audit["stored_power_pivot_measures"]["row_level_average_order_value_omr"])
+          print("Stored AOV (OMR):", audit["stored_power_pivot_measures"]["average_order_value_omr"])
+          print("AOV difference (OMR):", audit["stored_power_pivot_measures"]["average_order_value_difference_omr"])
+          print("Recomputed average rating:", audit["stored_power_pivot_measures"]["row_level_average_rating"])
+          print("Stored average rating:", audit["stored_power_pivot_measures"]["average_rating"])
+          print("Rating difference:", audit["stored_power_pivot_measures"]["average_rating_difference"])
           print("Branch reconciliation:")
           for row in audit["branch_revenue_reconciliation"]:
               print(row)
           from decimal import Decimal
           assert audit["cleaned"]["rows"] == 550, "Unexpected cleaned row count"
           assert abs(Decimal(audit["stored_power_pivot_measures"]["row_level_revenue_difference_omr"])) <= Decimal("0.001"), "Row-level revenue does not match the Power Pivot total"
+          assert abs(Decimal(audit["stored_power_pivot_measures"]["average_order_value_difference_omr"])) <= Decimal("0.000001"), "Recomputed AOV does not match the stored measure"
+          assert abs(Decimal(audit["stored_power_pivot_measures"]["average_rating_difference"])) <= Decimal("0.000001"), "Recomputed average rating does not match the stored measure"
           assert len(audit["branch_revenue_reconciliation"]) == 6, "Expected exactly six branch comparisons"
           assert all(row["status"] == "MATCH_AT_0.001_OMR" for row in audit["branch_revenue_reconciliation"]), "At least one branch does not reconcile to the stored pivot"
-          print("VALIDATION: row-level total and all six branch revenue values reconcile.")
+          print("VALIDATION: revenue total, AOV, average rating and all six branch revenue values reconcile.")
           PY

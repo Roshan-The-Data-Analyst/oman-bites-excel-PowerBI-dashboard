@@ -21,3 +21,5 @@ processed_summary,stored_average_rating,3.672727,Cached Power Pivot measure
 "cleaned","row_level_revenue_omr","3346.403","Sum of Quantity × Unit Price across cleaned table; verified by GitHub Actions"
 "reconciliation","row_level_revenue_difference_omr","0.000","Recomputed cleaned total minus cached Power Pivot Total Revenue"
 "reconciliation","branch_values_matching_pivot","6 of 6","All six branch revenue totals match the cached branch pivot at OMR 0.001 precision"
+"reconciliation","row_level_average_order_value_omr","6.084369","Recomputed total revenue divided by 550 orders; matches stored AOV at six decimals"
+"reconciliation","row_level_average_rating","3.672727","Mean rating across cleaned records; matches stored average rating at six decimals"
