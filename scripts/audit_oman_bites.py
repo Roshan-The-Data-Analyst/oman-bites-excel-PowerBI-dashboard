@@ -223,7 +223,9 @@ def main() -> None:
         value = (r.get("Total Revenue") or "").strip()
         canonical = valid_branches.get(label.casefold())
         # The worksheet contains multiple pivot tables side by side; only keep branch labels.
-        if canonical and value:
+        # Multiple pivot tables occupy the worksheet. Keep the first occurrence of
+        # each branch from the first branch-revenue pivot, and ignore later pivots.
+        if canonical and value and canonical not in stored_branch:
             try:
                 stored_branch[canonical] = D(value)
             except Exception:
