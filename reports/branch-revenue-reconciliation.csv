@@ -1,0 +1,7 @@
+branch,rank,row_level_revenue_omr,stored_pivot_revenue_omr,difference_omr,share_pct,status
+Sohar,1,620.380,620.380,0.000,18.54,MATCH_AT_0.001_OMR
+Muscat,2,601.003,601.003,0.000,17.96,MATCH_AT_0.001_OMR
+Salalah,3,556.423,556.423,0.000,16.63,MATCH_AT_0.001_OMR
+Nizwa,4,547.257,547.257,0.000,16.35,MATCH_AT_0.001_OMR
+Sur,5,526.228,526.228,0.000,15.73,MATCH_AT_0.001_OMR
+Duqm,6,495.112,495.112,0.000,14.80,MATCH_AT_0.001_OMR

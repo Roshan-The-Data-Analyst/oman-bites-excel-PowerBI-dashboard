@@ -1,0 +1,64 @@
+name: Oman Bites Data Audit
+
+on:
+  push:
+    branches:
+      - audit/oman-bites-data-lineage
+  pull_request:
+    paths:
+      - "data/raw/Raw_Data.xlsx"
+      - "data/processed/Oman_Bites_Cleaned_Data.xlsx"
+      - "scripts/audit_oman_bites.py"
+      - ".github/workflows/oman-bites-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-workbooks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out project
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run workbook audit
+        run: |
+          python scripts/audit_oman_bites.py --output-dir /tmp/oman-bites-audit
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          audit = json.loads(Path("/tmp/oman-bites-audit/data-lineage-audit.json").read_text(encoding="utf-8"))
+          print("Raw candidate rows:", audit["raw"]["candidate_rows_after_blank_and_header_removal"])
+          print("Raw unique Order IDs:", audit["lineage"]["raw_unique_order_ids"])
+          print("Cleaned rows:", audit["cleaned"]["rows"])
+          print("Shared Order IDs:", audit["lineage"]["shared_order_ids"])
+          print("Raw-only unique Order IDs:", audit["lineage"]["raw_ids_missing_from_cleaned"])
+          print("Cleaned-only unique Order IDs:", audit["lineage"]["cleaned_ids_absent_from_raw"])
+          print("Row-level revenue (OMR):", audit["cleaned"]["row_level_revenue_omr"])
+          print("Stored Power Pivot revenue (OMR):", audit["stored_power_pivot_measures"]["total_revenue_omr"])
+          print("Revenue difference (OMR):", audit["stored_power_pivot_measures"]["row_level_revenue_difference_omr"])
+          print("Recomputed AOV (OMR):", audit["stored_power_pivot_measures"]["row_level_average_order_value_omr"])
+          print("Stored AOV (OMR):", audit["stored_power_pivot_measures"]["average_order_value_omr"])
+          print("AOV difference (OMR):", audit["stored_power_pivot_measures"]["average_order_value_difference_omr"])
+          print("Recomputed average rating:", audit["stored_power_pivot_measures"]["row_level_average_rating"])
+          print("Stored average rating:", audit["stored_power_pivot_measures"]["average_rating"])
+          print("Rating difference:", audit["stored_power_pivot_measures"]["average_rating_difference"])
+          print("Branch reconciliation:")
+          for row in audit["branch_revenue_reconciliation"]:
+              print(row)
+          from decimal import Decimal
+          assert audit["cleaned"]["rows"] == 550, "Unexpected cleaned row count"
+          assert abs(Decimal(audit["stored_power_pivot_measures"]["row_level_revenue_difference_omr"])) <= Decimal("0.001"), "Row-level revenue does not match the Power Pivot total"
+          assert abs(Decimal(audit["stored_power_pivot_measures"]["average_order_value_difference_omr"])) <= Decimal("0.000001"), "Recomputed AOV does not match the stored measure"
+          assert abs(Decimal(audit["stored_power_pivot_measures"]["average_rating_difference"])) <= Decimal("0.000001"), "Recomputed average rating does not match the stored measure"
+          assert len(audit["branch_revenue_reconciliation"]) == 6, "Expected exactly six branch comparisons"
+          assert all(row["status"] == "MATCH_AT_0.001_OMR" for row in audit["branch_revenue_reconciliation"]), "At least one branch does not reconcile to the stored pivot"
+          print("VALIDATION: revenue total, AOV, average rating and all six branch revenue values reconcile.")
+          PY

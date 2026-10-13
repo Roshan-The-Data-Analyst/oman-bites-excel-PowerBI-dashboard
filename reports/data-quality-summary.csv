@@ -1,0 +1,25 @@
+area,check,value,interpretation
+raw,worksheet_rows_below_header,1184,Includes blank rows and repeated headers
+raw,blank_rows,6,Fully blank worksheet rows
+raw,repeated_header_rows,3,Rows that repeat headers
+raw,candidate_transaction_rows,1175,"After blank/header removal, before deduplication"
+raw,unique_order_ids,1150,Unique candidate Order IDs
+raw,repeated_order_id_occurrences,25,Repeated ID count after header removal
+raw,negative_quantity_rows,31,Review business meaning before removing
+raw,missing_cells,56,"14 customer names, 10 phone values, 32 optional ratings"
+raw,unclassified_date_pattern_rows,158,Need date parsing review; do not guess locale
+cleaned,rows,550,Rows in Cleaned Table
+cleaned,missing_cells,0,Counted over cleaned records
+cleaned,exact_duplicate_rows,0,Counted over cleaned records
+lineage,shared_order_ids,519,Raw-cleaned Order ID intersection
+lineage,raw_ids_missing_from_cleaned,631,Unique raw IDs absent from cleaned output
+lineage,cleaned_ids_absent_from_raw,31,Cleaned IDs not found in raw candidate rows
+processed_summary,stored_total_orders,550,Cached Power Pivot measure
+processed_summary,stored_total_revenue_omr,3346.403,Cached Power Pivot measure
+processed_summary,stored_average_order_value_omr,6.084369,Cached Power Pivot measure
+processed_summary,stored_average_rating,3.672727,Cached Power Pivot measure
+"cleaned","row_level_revenue_omr","3346.403","Sum of Quantity × Unit Price across cleaned table; verified by GitHub Actions"
+"reconciliation","row_level_revenue_difference_omr","0.000","Recomputed cleaned total minus cached Power Pivot Total Revenue"
+"reconciliation","branch_values_matching_pivot","6 of 6","All six branch revenue totals match the cached branch pivot at OMR 0.001 precision"
+"reconciliation","row_level_average_order_value_omr","6.084369","Recomputed total revenue divided by 550 orders; matches stored AOV at six decimals"
+"reconciliation","row_level_average_rating","3.672727","Mean rating across cleaned records; matches stored average rating at six decimals"

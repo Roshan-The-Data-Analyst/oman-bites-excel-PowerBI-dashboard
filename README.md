@@ -1,58 +1,85 @@
 # Oman Bites — Excel & Power BI Sales Analytics Dashboard
 
-A portfolio project demonstrating an end-to-end BI workflow for a simulated restaurant business in Oman: clean operational data, create measures, analyse branch and order performance, and present results through a Power BI dashboard.
+A portfolio project demonstrating a restaurant analytics workflow for a simulated multi-branch business in Oman, using Excel, Power Query, Power Pivot, DAX, and Power BI.
 
 ![Oman Bites dashboard overview](screenshots/dashboard/dashboard-overview.png)
 
 ## Project overview
 
-- **Business scenario:** Multi-branch restaurant operations in Oman
-- **Tools:** Microsoft Excel, Power Query, Power Pivot, DAX, and Power BI
-- **Data assets:** Raw source workbook and cleaned workbook
-- **Analysis areas:** Revenue, branch comparisons, order type, payment method, product/category performance, ratings, quantity, and interactive slicers
-- **Power BI report:** `powerbi/Oman_Bites_Dashboard.pbix`
-
-## Repository structure
-
-| Folder | Purpose |
-|---|---|
-| `data/raw/` | Original source workbook |
-| `data/processed/` | Cleaned Excel workbook |
-| `powerbi/` | Main Power BI report |
-| `docs/guides/` | Retained Power Query cleaning notes |
-| `screenshots/dashboard/` | Dashboard overview, detail, filters, and mobile view |
-| `screenshots/data-cleaning/` | Evidence of raw data and data preparation |
-| `screenshots/data-model/measures/` | DAX and measure-building screenshots |
-| `screenshots/insights/` | Branch and restaurant operations insights |
-
-## Workflow
-
-1. **Inspect the source data:** review field names, data types, duplicates, missing values, and inconsistent values.
-2. **Clean with Power Query:** standardize branches, categories, dates, quantities, unit prices, payment methods, and order types.
-3. **Model and calculate:** prepare a consistent model and measures for sales, quantity, ratings, and branch/product comparisons.
-4. **Build the dashboard:** present KPIs and filters that allow users to explore branch and order performance.
-5. **Validate before publication:** reconcile raw/cleaned row counts and compare Excel totals with Power BI measures.
+- **Business scenario:** Restaurant operations in Oman
+- **Tools:** Excel, Power Query, Power Pivot, DAX, Power BI
+- **Source workbooks:** Raw data and cleaned data
+- **Report:** `powerbi/Oman_Bites_Dashboard.pbix`
+- **Analysis areas:** Branch revenue, order types, payment methods, products/categories, ratings, and quantities
 
 ## Dashboard preview
 
 ![Dashboard detail](screenshots/dashboard/dashboard-detail.png)
 
-Explore [slicers and filters](screenshots/dashboard/slicers-and-filters.png), [revenue by branch](screenshots/insights/revenue-by-branch.png), [orders by branch](screenshots/insights/orders-by-branch.png), and [highest-rated branch](screenshots/insights/highest-rated-branch.png).
+More examples: [revenue by branch](screenshots/insights/revenue-by-branch.png), [orders by branch](screenshots/insights/orders-by-branch.png), [slicers and filters](screenshots/dashboard/slicers-and-filters.png), and [highest-rated branch](screenshots/insights/highest-rated-branch.png).
 
-## Data notes and limitations
+## Repository structure
 
-The repository contains both raw and cleaned workbooks. Treat the raw workbook as source evidence and the processed workbook as a transformation output. The earlier README lists 3,045 rows, while the cleaning notes describe a 1,184-row practice sheet; reconcile those counts against the actual workbooks before quoting a definitive record count.
+| Folder | Contents |
+|---|---|
+| `data/raw/` | Original source workbook |
+| `data/processed/` | Cleaned workbook used with the dashboard |
+| `powerbi/` | Power BI report |
+| `docs/guides/` | Power Query cleaning notes |
+| `docs/` | Project structure and audit notes |
+| `screenshots/dashboard/` | Dashboard views and filters |
+| `screenshots/data-cleaning/` | Data-cleaning evidence |
+| `screenshots/data-model/measures/` | DAX and measures evidence |
+| `screenshots/insights/` | Branch and restaurant insights |
+| `scripts/` | Reproducible audit script |
+| `reports/` | Data-quality and lineage audit outputs |
 
-The project scenario is simulated and should be presented as a portfolio case study, not actual company results. Existing assets are preserved by this organization pass; dashboard calculations have not been independently re-audited here.
+## Data lineage — important limitation
 
-## Getting started
+The raw workbook and cleaned workbook do **not currently reconcile as a full row-for-row transformation**:
 
-1. Clone or download the repository.
-2. Open `powerbi/Oman_Bites_Dashboard.pbix` in Power BI Desktop.
-3. Open the raw and processed workbooks to review source data and transformations.
-4. Use [the project structure guide](docs/project-structure.md) to navigate the repository.
-5. Refer to the [Power Query cleaning notes](docs/guides/) for transformation context.
+- `Raw_Data.xlsx` contains 1,184 worksheet rows below its header, including 6 blank rows and 3 repeated-header rows.
+- After excluding those blank/header rows, 1,175 candidate transaction rows remain. The source has duplicate order IDs and 31 negative-quantity rows, among other inconsistencies.
+- `Oman_Bites_Cleaned_Data.xlsx` contains 550 rows in its `Cleaned Table` sheet.
+- Only 519 unique order IDs overlap between the raw candidate rows and cleaned table: 631 unique raw IDs are absent from the cleaned table, and 31 cleaned IDs do not appear in the raw candidate set.
+
+**Interpretation:** The processed workbook may be a filtered sample or may have been produced from a different source version. Do not describe it as a complete clean-up of the current raw workbook until the missing IDs and extra IDs are explained.
+
+The cleaned workbook's Power Pivot summary reports 550 orders, total revenue of **OMR 3,346.403**, average order value of **OMR 6.084369**, and average rating of **3.672727**. A GitHub Actions run recalculated revenue from all 550 cleaned rows as Quantity × Unit Price: **OMR 3,346.403**, a difference of **OMR 0.000** from the cached total. The recomputed average order value (**OMR 6.084369**) and average rating (**3.672727**) are also checked against the stored measures. Each of the six row-level branch revenue totals matches the stored branch pivot at OMR 0.001 precision. The separate raw-to-cleaned Order ID lineage gap still needs explanation.
+
+## Audit files
+
+- [Data lineage and quality audit](docs/data-lineage-audit.md)
+- [Machine-readable audit](reports/data-lineage-audit.json)
+- [Data-quality summary](reports/data-quality-summary.csv)
+- [Branch revenue summary](reports/branch-revenue-reconciliation.csv)
+- [Reproducible audit script](scripts/audit_oman_bites.py)
+- [Project structure guide](docs/project-structure.md)
+
+## Run the audit locally
+
+Requires Python 3.10+ and uses the standard library only:
+
+```bash
+python scripts/audit_oman_bites.py
+```
+
+Optional custom paths:
+
+```bash
+python scripts/audit_oman_bites.py --raw data/raw/Raw_Data.xlsx --processed data/processed/Oman_Bites_Cleaned_Data.xlsx --output-dir reports
+```
+
+The script reads the workbooks and writes audit reports; it does not change the Excel files or the Power BI report.
+
+## Recommendations
+
+1. Reconcile the 631 missing raw IDs and 31 cleaned-only IDs before claiming end-to-end lineage.
+2. Define whether the cleaned workbook should retain 1,150 unique source orders or intentionally filter to a documented 550-row subset.
+3. Compare row-level revenue and average rating against Power Pivot measures after the lineage issue is resolved.
+4. Preserve the raw file, retain Power Query Applied Steps, and document exclusions and business rules.
+5. Label all results as simulated portfolio analysis rather than actual restaurant performance.
 
 ## Skills demonstrated
 
-Excel, Power Query, Power Pivot, DAX, Power BI, data cleaning, data modeling, KPI design, interactive dashboarding, and business reporting.
+Excel, Power Query, Power Pivot, DAX, Power BI, data cleaning, data lineage, data-quality validation, KPI reconciliation, and business reporting.
