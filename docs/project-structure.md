@@ -10,9 +10,15 @@ oman-bites-excel-PowerBI-dashboard/
 ├── powerbi/Oman_Bites_Dashboard.pbix
 ├── docs/
 │   ├── project-structure.md
+│   ├── data-lineage-audit.md
 │   └── guides/
 │       ├── power-query-cleaning-notes-part-1.md
 │       └── power-query-cleaning-notes-part-2.md
+├── scripts/audit_oman_bites.py
+├── reports/
+│   ├── data-lineage-audit.json
+│   ├── data-quality-summary.csv
+│   └── branch-revenue-reconciliation.csv
 └── screenshots/
     ├── dashboard/
     ├── data-cleaning/
@@ -20,22 +26,10 @@ oman-bites-excel-PowerBI-dashboard/
     └── insights/
 ```
 
-## Folder responsibilities
+## Data discipline
 
-- **data/raw/** — source workbook; keep it unchanged.
-- **data/processed/** — cleaned Excel workbook created during preparation.
-- **powerbi/** — Power BI dashboard.
-- **docs/guides/** — original Power Query cleaning notes retained for reference.
-- **screenshots/dashboard/** — dashboard views, filters, and mobile layout.
-- **screenshots/data-cleaning/** — evidence of data-cleaning steps.
-- **screenshots/data-model/measures/** — DAX/measure-building screenshots.
-- **screenshots/insights/** — charts and evidence for branch and restaurant insights.
-
-## Maintenance checklist
-
-- Keep raw and processed files clearly separated.
-- Update README image links whenever screenshots move.
-- Reconcile row counts and totals across raw workbook, cleaned workbook, and Power BI before quoting definitive metrics.
-- Document each measure's numerator, denominator, filter context, and business definition.
-- Preserve source evidence until the cleaned output and dashboard have been validated.
-- Avoid committing Office lock files and temporary editor artifacts.
+- Keep `data/raw/` immutable.
+- Save cleaned output under `data/processed/`.
+- Record every row-exclusion rule and its row count.
+- Reconcile source Order IDs before claiming lineage.
+- Check measure definitions and reconcile row-level values to Power Pivot output before presenting KPI figures as verified.

@@ -1,0 +1,90 @@
+{
+  "source_files": {
+    "raw": "data/raw/Raw_Data.xlsx",
+    "processed": "data/processed/Oman_Bites_Cleaned_Data.xlsx"
+  },
+  "raw": {
+    "worksheet_rows_below_header": 1184,
+    "blank_rows": 6,
+    "repeated_header_rows": 3,
+    "candidate_rows_after_blank_and_header_removal": 1175,
+    "unique_order_ids": 1150,
+    "repeated_order_id_occurrences": 25,
+    "exact_duplicate_rows_including_repeated_headers": 27,
+    "missing_cells_in_nonblank_rows": 56,
+    "missing_by_column": {
+      "Customer Name": 14,
+      "Phone": 10,
+      "Rating (1-5)": 32
+    },
+    "negative_quantity_rows": 31,
+    "unclassified_date_pattern_rows": 158,
+    "recognized_date_formats": {
+      "ISO-like": 248,
+      "slash-formatted": 365,
+      "dash-formatted": 271,
+      "Excel-serial-like": 133,
+      "other-needs-review": 158
+    },
+    "casefolded_branch_label_variants": 12
+  },
+  "cleaned": {
+    "worksheet": "Cleaned Table",
+    "rows": 550,
+    "blank_rows": 0,
+    "duplicate_rows": 0,
+    "missing_cells": 0,
+    "unique_order_ids": 550
+  },
+  "orders_staging_sheet": {
+    "rows": 550,
+    "missing_cells": 90,
+    "negative_quantity_rows": 15
+  },
+  "lineage": {
+    "raw_candidate_rows": 1175,
+    "raw_unique_order_ids": 1150,
+    "cleaned_rows": 550,
+    "cleaned_unique_order_ids": 550,
+    "shared_order_ids": 519,
+    "raw_ids_missing_from_cleaned": 631,
+    "cleaned_ids_absent_from_raw": 31,
+    "cleaned_and_orders_sheet_id_sets_match": true
+  },
+  "stored_power_pivot_measures": {
+    "total_orders": "550",
+    "total_revenue_omr": "3346.4029999999984",
+    "average_order_value_omr": "6.084369090909088",
+    "average_rating": "3.6727272727272728"
+  },
+  "stored_branch_revenue_omr": [
+    {
+      "branch": "Sohar",
+      "revenue": 620.38
+    },
+    {
+      "branch": "Muscat",
+      "revenue": 601.003
+    },
+    {
+      "branch": "Salalah",
+      "revenue": 556.423
+    },
+    {
+      "branch": "Nizwa",
+      "revenue": 547.257
+    },
+    {
+      "branch": "Sur",
+      "revenue": 526.228
+    },
+    {
+      "branch": "Duqm",
+      "revenue": 495.112
+    }
+  ],
+  "branch_pivot_sum_omr": 3346.403,
+  "branch_pivot_matches_stored_total": true,
+  "calculated_row_level_revenue": "not run in this environment; run scripts/audit_oman_bites.py to calculate and reconcile from workbook cells",
+  "key_caveat": "Row-level revenue has not been independently reconciled here; summary totals are internal pivot/model checks only."
+}
