@@ -1,0 +1,19 @@
+# Excel / Office temporary files
+~$*.xlsx
+~$*.xlsm
+~$*.xls
+~$*.csv
+*.tmp
+
+# Power BI temporary / backup files
+*.pbix.autosave
+*.pbix.backup
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local editor settings
+.vscode/
+.idea/
