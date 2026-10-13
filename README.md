@@ -1,49 +1,58 @@
-# Oman Bites — Restaurant Analytics Dashboard (Excel)
+# Oman Bites — Excel & Power BI Sales Analytics Dashboard
 
-An end-to-end Excel analytics project built on a simulated dataset of a
-6-branch restaurant chain operating in Oman. The project demonstrates data
-cleaning, modeling, and dashboarding skills using Power Query, Power Pivot,
-and DAX.
+A portfolio project demonstrating an end-to-end BI workflow for a simulated restaurant business in Oman: clean operational data, create measures, analyse branch and order performance, and present results through a Power BI dashboard.
 
-## 📊 Project Overview
+![Oman Bites dashboard overview](screenshots/dashboard/dashboard-overview.png)
 
-- **Dataset:** 3,045 rows of restaurant transaction/sales data across 6 Oman branches
-- **Tools used:** Excel, Power Query, Power Pivot, DAX
-- **Goal:** Clean a deliberately messy dataset, build a data model, and produce
-  an interactive dashboard answering key business questions
+## Project overview
 
-## 🧹 Data Cleaning (Power Query)
+- **Business scenario:** Multi-branch restaurant operations in Oman
+- **Tools:** Microsoft Excel, Power Query, Power Pivot, DAX, and Power BI
+- **Data assets:** Raw source workbook and cleaned workbook
+- **Analysis areas:** Revenue, branch comparisons, order type, payment method, product/category performance, ratings, quantity, and interactive slicers
+- **Power BI report:** `powerbi/Oman_Bites_Dashboard.pbix`
 
-The raw dataset included 10 intentional data quality issues (duplicates,
-blank values, inconsistent formatting, incorrect data types, etc.), all
-resolved using Power Query.
+## Repository structure
 
-## 🧮 Data Modeling (Power Pivot & DAX)
+| Folder | Purpose |
+|---|---|
+| `data/raw/` | Original source workbook |
+| `data/processed/` | Cleaned Excel workbook |
+| `powerbi/` | Main Power BI report |
+| `docs/guides/` | Retained Power Query cleaning notes |
+| `screenshots/dashboard/` | Dashboard overview, detail, filters, and mobile view |
+| `screenshots/data-cleaning/` | Evidence of raw data and data preparation |
+| `screenshots/data-model/measures/` | DAX and measure-building screenshots |
+| `screenshots/insights/` | Branch and restaurant operations insights |
 
-Built a data model in Power Pivot with custom DAX measures covering:
-- Revenue and sales performance by branch
-- Time-based trend analysis
-- Category/product-level breakdowns
+## Workflow
 
-## 📈 Dashboard
+1. **Inspect the source data:** review field names, data types, duplicates, missing values, and inconsistent values.
+2. **Clean with Power Query:** standardize branches, categories, dates, quantities, unit prices, payment methods, and order types.
+3. **Model and calculate:** prepare a consistent model and measures for sales, quantity, ratings, and branch/product comparisons.
+4. **Build the dashboard:** present KPIs and filters that allow users to explore branch and order performance.
+5. **Validate before publication:** reconcile raw/cleaned row counts and compare Excel totals with Power BI measures.
 
-An interactive Excel dashboard with slicers and visuals summarizing branch
-performance, sales trends, and key KPIs.
+## Dashboard preview
 
-<img width="575" height="335" alt="dashboard 1 main" src="https://github.com/user-attachments/assets/e210817e-9dfd-4c70-8a5a-685f8af1c6f2" />
+![Dashboard detail](screenshots/dashboard/dashboard-detail.png)
 
-<img width="591" height="344" alt="dashboard 2" src="https://github.com/user-attachments/assets/42a9e830-02df-4179-8690-5a0dac84b358" />
+Explore [slicers and filters](screenshots/dashboard/slicers-and-filters.png), [revenue by branch](screenshots/insights/revenue-by-branch.png), [orders by branch](screenshots/insights/orders-by-branch.png), and [highest-rated branch](screenshots/insights/highest-rated-branch.png).
 
+## Data notes and limitations
 
-## 📁 Repository Structure
+The repository contains both raw and cleaned workbooks. Treat the raw workbook as source evidence and the processed workbook as a transformation output. The earlier README lists 3,045 rows, while the cleaning notes describe a 1,184-row practice sheet; reconcile those counts against the actual workbooks before quoting a definitive record count.
 
-- `data/` — raw and messy source dataset
-- `dashboard/` — final Excel file with Power Query, Power Pivot, and dashboard
-- `docs/` — supporting guide with DAX, Power Pivot, and analytics Q&A
-- `screenshots/` — dashboard preview image(s)
+The project scenario is simulated and should be presented as a portfolio case study, not actual company results. Existing assets are preserved by this organization pass; dashboard calculations have not been independently re-audited here.
 
-## 🙋 About
+## Getting started
 
-Built by Roshan Sampath  as part of a data analytics portfolio, applying
-Excel-based BI skills (Power Query, Power Pivot, DAX) to a realistic F&B
-business scenario.
+1. Clone or download the repository.
+2. Open `powerbi/Oman_Bites_Dashboard.pbix` in Power BI Desktop.
+3. Open the raw and processed workbooks to review source data and transformations.
+4. Use [the project structure guide](docs/project-structure.md) to navigate the repository.
+5. Refer to the [Power Query cleaning notes](docs/guides/) for transformation context.
+
+## Skills demonstrated
+
+Excel, Power Query, Power Pivot, DAX, Power BI, data cleaning, data modeling, KPI design, interactive dashboarding, and business reporting.
