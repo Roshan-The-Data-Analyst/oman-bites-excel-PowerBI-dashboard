@@ -203,12 +203,18 @@ def main() -> None:
             numeric_errors["blank_or_invalid_rating"] += 1
 
     stored_branch: dict[str, Decimal] = {}
+    valid_branches = {
+        "muscat": "Muscat", "salalah": "Salalah", "sohar": "Sohar",
+        "nizwa": "Nizwa", "sur": "Sur", "duqm": "Duqm",
+    }
     for r in pivot_records:
         label = (r.get("Row Labels") or "").strip()
         value = (r.get("Total Revenue") or "").strip()
-        if label and label.casefold() != "grand total" and value:
+        canonical = valid_branches.get(label.casefold())
+        # The worksheet contains multiple pivot tables side by side; only keep branch labels.
+        if canonical and value:
             try:
-                stored_branch[label] = D(value)
+                stored_branch[canonical] = D(value)
             except Exception:
                 continue
 

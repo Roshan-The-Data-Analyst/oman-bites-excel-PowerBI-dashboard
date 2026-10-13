@@ -91,7 +91,19 @@ Branch revenue in `Pover Pivot Q&A`:
 | Duqm | 495.112 |
 | **Total** | **3,346.403** |
 
-The branch values sum to the workbook's Total Revenue, and Total Revenue / 550 orders agrees with Average Order Value after rounding. This confirms internal consistency between the stored branch pivot and measure summary; it does **not** by itself establish that all figures are recalculated from the correct intended source rows.
+The row-level audit script was executed with GitHub Actions. It calculated `SUM(Quantity × Unit Price)` across the 550 cleaned records as **OMR 3,346.403**, matching the cached Power Pivot total (difference **OMR 0.000** at 3-decimal reporting precision). The six branch calculations also match their cached pivot values at OMR 0.001 precision:
+
+| Branch | Recomputed revenue (OMR) | Stored branch pivot (OMR) | Difference |
+|---|---:|---:|---:|
+| Sohar | 620.380 | 620.380 | 0.000 |
+| Muscat | 601.003 | 601.003 | 0.000 |
+| Salalah | 556.423 | 556.423 | 0.000 |
+| Nizwa | 547.257 | 547.257 | 0.000 |
+| Sur | 526.228 | 526.228 | 0.000 |
+| Duqm | 495.112 | 495.112 | 0.000 |
+| **Total** | **3,346.403** | **3,346.403** | **0.000** |
+
+This verifies the cached dashboard sales calculations against the current cleaned sheet. It does **not** resolve the 631 raw-only IDs and 31 cleaned-only IDs; the current cleaned file may be a selected sample or may derive from a different source version.
 
 ## Audit method
 

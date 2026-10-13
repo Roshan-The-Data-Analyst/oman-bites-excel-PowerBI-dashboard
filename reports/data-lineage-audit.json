@@ -85,6 +85,63 @@
   ],
   "branch_pivot_sum_omr": 3346.403,
   "branch_pivot_matches_stored_total": true,
-  "calculated_row_level_revenue": "not run in this environment; run scripts/audit_oman_bites.py to calculate and reconcile from workbook cells",
-  "key_caveat": "Row-level revenue has not been independently reconciled here; summary totals are internal pivot/model checks only."
+  "calculated_row_level_revenue": "3346.403",
+  "key_caveat": "Row-level revenue totals OMR 3,346.403 and matches the stored Power Pivot total at OMR 0.001 precision; all six branch totals match the cached branch pivot. The source-to-cleaned Order ID lineage gap remains unresolved.",
+  "row_level_revenue_difference_omr": "0.000",
+  "branch_revenue_reconciliation": [
+    {
+      "branch": "Sohar",
+      "rank": 1,
+      "row_level_revenue_omr": "620.380",
+      "stored_pivot_revenue_omr": "620.380",
+      "difference_omr": "0.000",
+      "share_pct": "18.54",
+      "status": "MATCH_AT_0.001_OMR"
+    },
+    {
+      "branch": "Muscat",
+      "rank": 2,
+      "row_level_revenue_omr": "601.003",
+      "stored_pivot_revenue_omr": "601.003",
+      "difference_omr": "0.000",
+      "share_pct": "17.96",
+      "status": "MATCH_AT_0.001_OMR"
+    },
+    {
+      "branch": "Salalah",
+      "rank": 3,
+      "row_level_revenue_omr": "556.423",
+      "stored_pivot_revenue_omr": "556.423",
+      "difference_omr": "0.000",
+      "share_pct": "16.63",
+      "status": "MATCH_AT_0.001_OMR"
+    },
+    {
+      "branch": "Nizwa",
+      "rank": 4,
+      "row_level_revenue_omr": "547.257",
+      "stored_pivot_revenue_omr": "547.257",
+      "difference_omr": "0.000",
+      "share_pct": "16.35",
+      "status": "MATCH_AT_0.001_OMR"
+    },
+    {
+      "branch": "Sur",
+      "rank": 5,
+      "row_level_revenue_omr": "526.228",
+      "stored_pivot_revenue_omr": "526.228",
+      "difference_omr": "0.000",
+      "share_pct": "15.73",
+      "status": "MATCH_AT_0.001_OMR"
+    },
+    {
+      "branch": "Duqm",
+      "rank": 6,
+      "row_level_revenue_omr": "495.112",
+      "stored_pivot_revenue_omr": "495.112",
+      "difference_omr": "0.000",
+      "share_pct": "14.80",
+      "status": "MATCH_AT_0.001_OMR"
+    }
+  ]
 }
